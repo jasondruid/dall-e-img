@@ -30,7 +30,7 @@ const CreatePost = () => {
         if (form.prompt) {
             try {
                 setGeneratingImg(true);
-                const response = await axios.post('http://localhost:8080/api/v1/dalle',
+                const response = await axios.post('https://dall-e-img.onrender.com/api/v1/dalle',
                     { prompt: form.prompt }
                 )
                 const data = await response.data;
@@ -62,7 +62,7 @@ const CreatePost = () => {
         if (form.prompt && form.photo) {
             setLoading(true);
             try {
-                const response = await axios.post('http://localhost:8080/api/v1/post', form);
+                const response = await axios.post('https://dall-e-img.onrender.com/api/v1/post', form);
                 const data = response.data;
                 navigate('/');
             }
@@ -107,7 +107,7 @@ const CreatePost = () => {
                         </div>)}
                     </div>
                 </div>
-                <div className='mt-2 flex gap-5'>
+                <div className='mt-2 flex gap-5 items-center justify-center sm:justify-start'>
                     <HCaptcha key={resetCaptcha}
                         sitekey={import.meta.env.VITE_REACT_APP_HCAPTCHA_SITEKEY}
                         onVerify={setCaptcha}

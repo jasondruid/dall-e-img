@@ -16,6 +16,32 @@ router.route('/').get((req, res, next) => {
     res.send('Hello from DALL-E!');
 })
 
+router.route('/chat').post(async (req, res, next) => {
+    try {
+        const prompt = req.body.prompt;
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `${prompt}`,
+            temperature: 0.7,
+            max_tokens: 600,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+
+        res.status(200).send({
+            bot: response.data.choices[0].text
+        })
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).send({ e });
+    }
+
+
+});
+
+
 router.route('/').post(async (req, res, next) => {
     try {
         const { prompt } = req.body;
