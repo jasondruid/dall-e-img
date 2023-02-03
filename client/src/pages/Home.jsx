@@ -20,7 +20,7 @@ const Home = () => {
             try {
                 const response = await axios.get('https://dall-e-img.onrender.com/api/v1/post')
                 const data = response.data;
-                console.log(data.data);
+                console.log(data);
                 setAllPosts(data.data.reverse());
             }
             catch (error) {

@@ -49,7 +49,7 @@ const ChatPage = () => {
         chatRef.current?.scrollTo({ top: 999999, behavior: "smooth" });
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/dalle/chat', { prompt: currentPrompt });
+            const response = await axios.post('https://dall-e-img.onrender.com/api/v1/dalle/chat', { prompt: currentPrompt });
 
             if (response?.data) {
                 const letters = response.data.bot.replace(`\n\n`, "").split("");
@@ -57,6 +57,9 @@ const ChatPage = () => {
                 for (let i = 0; i < letters.length; i++) {
                     setLastMessage(prev => prev + letters[i]);
                     await new Promise(resolve => setTimeout(resolve, 30));
+                    if (i % 10 === 0) {
+                        chatRef.current?.scrollTo({ top: 999999, behavior: "auto" });
+                    }
                 }
                 chatRef.current?.scrollTo({ top: 999999, behavior: "smooth" });
 
@@ -75,6 +78,7 @@ const ChatPage = () => {
                 progress: undefined,
                 theme: "light",
             })
+            setMessages(prev => [...prev, { id: prev.length, user: "machine", text: "Sorry I am to answer right now, may you write it again?" }])
         }
         finally {
             setLoading(false);
@@ -317,7 +321,7 @@ const ChatPage = () => {
         <div>
             <p className='text-[#222328] text-[18px] mt-6 dark:text-gray-300'>To use Chat system please fill the captcha</p>
             <div className='mt-4 flex gap-5'>
-                <HCaptcha 
+                <HCaptcha
                     sitekey={import.meta.env.VITE_REACT_APP_HCAPTCHA_SITEKEY}
                     onVerify={setCaptcha}
                 />
