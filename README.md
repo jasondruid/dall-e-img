@@ -1,4 +1,4 @@
-# dall-e-img
+# OpenAi Consumer (Dall-e and ChatGPT).
 
 A Project made with Node for the server and React for the client
 
